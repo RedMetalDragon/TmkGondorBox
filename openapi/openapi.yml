@@ -1,0 +1,191 @@
+openapi: 3.0.0
+info:
+  title: File Management API
+  description: API for uploading, downloading, managing, and searching files in AWS S3
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3000
+    description: Local server
+
+tags:
+  - name: File Management
+    description: Endpoints for managing files in AWS S3
+
+paths:
+  /upload:
+    post:
+      tags:
+        - File Management
+      summary: Upload a file
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: File uploaded successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: File uploaded successfully
+                  fileId:
+                    type: string
+                    example: file-key-123
+
+  /download/{fileId}:
+    get:
+      tags:
+        - File Management
+      summary: Download a file by its ID
+      parameters:
+        - name: fileId
+          in: path
+          required: true
+          schema:
+            type: string
+            example: file-key-123
+      responses:
+        '200':
+          description: File download stream
+        '500':
+          description: Error downloading file
+
+  /files:
+    get:
+      tags:
+        - File Management
+      summary: List all files
+      responses:
+        '200':
+          description: List of files
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    Key:
+                      type: string
+                    Size:
+                      type: integer
+
+  /files/{fileId}/metadata:
+    get:
+      tags:
+        - File Management
+      summary: Get file metadata by file ID
+      parameters:
+        - name: fileId
+          in: path
+          required: true
+          schema:
+            type: string
+            example: file-key-123
+      responses:
+        '200':
+          description: File metadata
+        '500':
+          description: Error retrieving metadata
+
+  /files/{fileId}:
+    delete:
+      tags:
+        - File Management
+      summary: Delete a file by its ID
+      parameters:
+        - name: fileId
+          in: path
+          required: true
+          schema:
+            type: string
+            example: file-key-123
+      responses:
+        '200':
+          description: File deleted successfully
+        '500':
+          description: Error deleting file
+
+    put:
+      tags:
+        - File Management
+      summary: Update a file by its ID
+      parameters:
+        - name: fileId
+          in: path
+          required: true
+          schema:
+            type: string
+            example: file-key-123
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: File updated successfully
+        '500':
+          description: Error updating file
+
+  /files/{fileId}/rename:
+    patch:
+      tags:
+        - File Management
+      summary: Rename a file by its ID
+      parameters:
+        - name: fileId
+          in: path
+          required: true
+          schema:
+            type: string
+            example: file-key-123
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                newFileName:
+                  type: string
+                  example: new-file-name.txt
+      responses:
+        '200':
+          description: File renamed successfully
+        '500':
+          description: Error renaming file
+
+  /files/search:
+    get:
+      tags:
+        - File Management
+      summary: Search for files by name
+      parameters:
+        - name: name
+          in: query
+          required: true
+          schema:
+            type: string
+            example: example
+      responses:
+        '200':
+          description: List of matching files
+        '500':
+          description: Error searching files
