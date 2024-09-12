@@ -5,7 +5,7 @@ const routes = require('./routes');
 
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
-const swaggerDocument = YAML.load('./openapi/openapi.yml'); 
+const swaggerDocument = YAML.load('./openapi/openapi.yml');
 
 const app = express();
 app.use(express.json());
