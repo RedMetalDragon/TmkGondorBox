@@ -24,6 +24,17 @@ const downloadFile = (req, res) => {
   }
 };
 
+/**
+ * The function `getFiles` asynchronously retrieves a list of files from an S3 bucket and returns the
+ * file keys and sizes in a JSON response, handling errors appropriately.
+ * @param req - The `req` parameter typically represents the request object in Node.js applications. It
+ * contains information about the incoming HTTP request such as headers, parameters, body, etc. In the
+ * context of your code snippet, `req` is likely the request object passed to the `getFiles` function,
+ * which is
+ * @param res - The `res` parameter in the `getFiles` function is the response object that will be used
+ * to send a response back to the client making the request. In this case, it is being used to send a
+ * JSON response containing the list of files retrieved from an S3 bucket. If there is
+ */
 const getFiles = async (req, res) => {
   try {
     const result = await listFilesFromS3();
