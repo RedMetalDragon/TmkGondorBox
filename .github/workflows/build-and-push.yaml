@@ -110,7 +110,7 @@ jobs:
                   "headers": {
                     "Authorization": "FunctionKey $FUNCTION_KEY"
                   },
-                  "body": "{\"tmk-service-version-tags-vs-staging\": \"tmktmkgondorbox\", \"currentTag\": \"${{ github.event.inputs.branch || github.ref }}\"}"
+                  "body": "{\"tmk-service-version-tags-vs-staging\": \"tmkgondorbox\", \"lastBuildTag\": \"${{ github.event.inputs.branch || github.ref }}\"}"
                   }
                   EOF
 
