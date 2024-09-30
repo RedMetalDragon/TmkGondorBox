@@ -8,12 +8,12 @@ const YAML = require('yamljs');
 const swaggerDocument = YAML.load('./openapi/openapi.yml');
 
 const app = express();
-app.use(express.json());
+const api_version = '/api/v1'
 
 // Serve Swagger UI at /api-docs
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
-app.use(routes);
+app.use(`${api_version}/api-docs`, swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use(api_version, routes);
+app.use(express.json());
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
