@@ -30,4 +30,13 @@ router.patch('/files/:fileId/rename', renameFile);
 
 router.get('/files/search', searchFile);
 
+/**
+ * Health Check Endpoint
+ * Description: Checks the health status of the GondorBox service.
+ * Response: JSON object with status and message
+ */
+router.get('/health', (req, res) => {
+  res.status(200).json({ status: 'OK', message: 'GondorBox service is running' });
+});
+
 module.exports = router;
